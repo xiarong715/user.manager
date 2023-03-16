@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  web:
+    image: user.manager:v1.0
+    container_name: user_manager
+    ports: 
+      - 9090:8088
+    depends_on:    # 告诉docker-compose当前服务启动之前先要把depends_on的服务启动起来。参考：https://zhuanlan.zhihu.com/p/382779508
+      mysql:
+          condition: service_healthy
+    volumes:  # 挂载
+      - ./compose.yaml:/dist/compose.yaml
+      # - ./public:/dist/public   # 对于文件夹，是制作镜像时拷贝到镜像中，还是启动容器时挂载到容器中，那种方法更优？
+
+  mysql:
+    image: mysql:5.7
+    container_name: user_manager_mysql
+    command: mysqld --user=root
+    # You can easily populate your mysql services by mounting a SQL dump into that directory and provide custom images with contributed data.
+    # mount ./article.sql in host machine on the /docker-entrypoint-initdb.d/init.sql in container, the limits of authority is only read.
+    volumes: 
+      - ./article.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - 3308:3306
+    environment:      # 设置环境变量   https://hub.docker.com/_/mysql     中的 Environment Variables 部分
+      - MYSQL_DATABASE=article
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:      
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      # interval: 1m30s
+      timeout: 5s
+      retries: 10
+      # start_period: 30s

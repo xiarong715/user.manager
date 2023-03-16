@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页</title>
+    <!-- 代码初始化,保证浏览器兼容,主流浏览器显示保持一致:chrome,FireFox,IE,Opera,safari -->
+    <link rel="stylesheet" href="/public/css/base.css">
+    <!-- 引入自定义样式表 -->
+    <link rel="stylesheet" href="/public/css/login.css">
+    <!-- 引入jquery库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 内部脚本 -->
+</head>
+<body>
+    <!-- 登录页大盒子 -->
+    <div class="login-box">
+        <h1>账户登录</h1>
+        <form action="/auth" method="post">
+            <!-- 账户 -->
+            <div class="user-name">
+                <!-- 关联标签label和input的id保持一致 -->
+                <label for="name" class="iconfont iconzhanghao"></label>
+                <input id="name" type="text" name="user" placeholder="邮箱/用户名/登录手机">
+            </div>
+            <!-- 密码 -->
+            <div class="user-pwd">
+                <!-- 关联标签label和input的id保持一致 -->
+                <label for="pwd" class="iconfont iconmima"></label>
+                <input id="pwd" type="password" name="passwd" placeholder="请输入密码">
+                <label class="iconfont iconclose-eye control_pwd"></label>
+            </div>
+            <!-- 注册按钮 -->
+            <button class="submit-btn">登录</button>
+            <!-- 相关操作 -->
+            <div class="other-box">
+                <a href="#">忘记密码</a>
+                <a href="/register">立即注册</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
